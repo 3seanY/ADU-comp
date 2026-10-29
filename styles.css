@@ -153,6 +153,11 @@ svg { flex-shrink: 0; }
 .judge-empty { padding: 24px 0; display: grid; gap: 24px; font-size: 24px; color: #6c6170; }
 .judge-empty > span { font-family: var(--pixel-font); font-size: 12px; line-height: 2; }
 .judge-alternatives { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; }
+.judge-service-state { border: 2px solid #b6bca6; background: #e0e4d2; padding: 12px; font-size: 20px; }
+.result-team { padding: 22px; border: 2px solid #bdb2a6; background: #e8e2d0; }
+.result-score { font-family: var(--pixel-font); font-size: clamp(22px, 4vw, 42px); padding: 18px 0; overflow-wrap: anywhere; }
+.result-score span { display: block; font-family: 'VT323', monospace; font-size: 22px; margin-top: 12px; }
+.roster-color { display: inline-block; width: 16px; height: 16px; border: 2px solid #30283e; flex-shrink: 0; }
 @media (max-width: 540px) { .quiz-options { grid-template-columns: 1fr; } }
 @media (min-width: 1024px) {
   .game-shell .cartridge-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

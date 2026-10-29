@@ -1,0 +1,55 @@
+[
+  {
+    "title": "Family AI Game Day Project Report",
+    "sections": [
+      {"heading": "Project overview", "text": "Family AI Game Day is a multiplayer web application that combines physical family activities with a UAE cultural heritage quiz. Its purpose is to make shared play easier to organise through team setup, editable rules, a match timer, score recording, and a final results screen. The interface uses a retro pixel game aesthetic with illustrated game cards, block-style controls, and a six-step progress indicator."},
+      {"heading": "Executive summary", "text": "The project provides five challenges: Backyard Football, Living Room Lava Relay, Neon Dance Crew Battle, Cardboard Castle Siege, and UAE Heritage Quest. Players select an activity, organise at least four named participants across two teams, configure the rules, and play. Physical games can be reviewed through an uploaded recording, while the quiz scores submitted answers directly."},
+      {"heading": "Implementation status", "text": "The React frontend and Node.js backend are implemented. Uploaded videos can be forwarded to a video-capable Gemini model, with a structured score report returned to the website. Final scores come from a confirmed AI result or the user's entered totals. The production build and 15 automated tests passed during development. A Gemini API key is still required for live analysis; real-world scoring accuracy has not yet been validated."}
+    ]
+  },
+  {
+    "title": "Purpose and Objectives",
+    "sections": [
+      {"heading": "Problem addressed", "text": "Family games often rely on informal rules, inconsistent scorekeeping, and separate tools for timing or reviewing a result. A single interface can support these practical tasks while preserving the social nature of play. The project also introduces cultural learning through a quiz focused on Emirati traditions, hospitality, and heritage crafts."},
+      {"heading": "Primary objectives", "text": "The application aims to provide a clear sequence from game selection to final results; maintain an editable roster for two teams; make scoring rules, penalties, and tie-break conditions visible; support timed and points-based activities; and allow users to review recorded gameplay. The heritage quiz adds an educational activity that does not require a camera or external AI service."},
+      {"heading": "Intended users and scope", "text": "The current implementation is designed for local group play using a shared website interface. Participants can record physical games with a separate phone or camera and upload the file after playing. The play screen itself is a timer and manual scoreboard, not a live camera recorder. User accounts, online matchmaking, and permanent match history are outside the present implementation."},
+      {"heading": "Design approach", "text": "Pixel landscapes, illustrated challenge cards, arcade fonts, and consistent panels give the app a game-like appearance. Responsive layouts support different screen sizes. The same visual system is used for team setup, rule configuration, the upload screen, and the final scoreboard so that the overall flow remains recognisable."}
+    ]
+  },
+  {
+    "title": "Games and User Workflow",
+    "sections": [
+      {"heading": "Available challenges", "text": "Backyard Football uses a default score of one point per goal, with a foul penalty. Living Room Lava Relay compares completion times in seconds, including floor-touch penalties; the lower time wins. Neon Dance Crew Battle supports team routine scoring, but reliable AI ratings require a clear judging rubric. Cardboard Castle Siege awards points for visible target hits and includes a friendly-fire penalty. These rules can be reviewed or adjusted before play."},
+      {"heading": "UAE Heritage Quest", "text": "The quiz contains six multiple-choice questions with alternating team turns, giving each team three questions. Every correct answer earns 10 points, and incorrect or unanswered questions earn zero. Topics include the majlis, Arabic coffee, Al-Ayyala, falconry, Al Talli, and Al Aflaj. Each response reveals a short explanation. A three-minute default timer, pause and resume controls, answer review, and shared victory for a tied score complete the activity."},
+      {"heading": "Six-step journey", "text": "1. Select a game. 2. Add or edit named players and assign both teams. 3. Confirm rules, score units, winning direction, and readiness. 4. Play using the timer and recorded scoreboard, or answer the quiz. 5. Upload and review a physical-game recording, or review quiz answers. 6. Confirm the final totals and view the result."},
+      {"heading": "User control", "text": "Physical-game users can finish with manual scores even when video analysis is unavailable. AI totals can be accepted or replaced before the result is confirmed. The results screen identifies the score source and displays the actual team roster rather than selecting an unsupported individual MVP."}
+    ]
+  },
+  {
+    "title": "System Design and Video Analysis",
+    "sections": [
+      {"heading": "Application architecture", "text": "The frontend uses React, Vite, and Tailwind CSS. It manages the selected game, roster, rules, match timer, quiz answers, uploaded-video preview, and confirmed result. A Node.js HTTP server provides the video-scoring endpoint and can serve the built website. During development, Vite forwards API requests to the local server."},
+      {"heading": "Video processing sequence", "text": "After the user selects Analyze, the browser sends the uploaded video and match context to the server. The server validates the request and uploads the file to Gemini's Files API. Once processing is complete, it asks the model to review the recording using the game's rules, score unit, and team jersey information. The returned structured report includes team score totals, match coverage, confidence, timestamped observations, and limitations."},
+      {"heading": "Scoring and result handling", "text": "A complete-match report with high confidence and supporting evidence can pre-fill the final scoreboard. AI values replace the recorded totals; they are not added as arbitrary bonuses. Partial recordings, unclear evidence, or unknown scores require manual review. If the user edits the totals, the confirmed scoreboard remains authoritative and the AI report is retained only as a reference. Quiz scores are calculated directly from submitted answers."},
+      {"heading": "File handling and configuration", "text": "The app accepts supported playable videos up to 200 MB and 10 minutes. Analysis sends the video, including audio, to Google Gemini. The server holds uploads temporarily in memory and attempts to delete the provider file after processing. The API key stays in a git-ignored server environment file. Previewing a selected video alone does not upload it."}
+    ]
+  },
+  {
+    "title": "Testing and Current Findings",
+    "sections": [
+      {"heading": "Verification performed", "text": "The production build completed successfully, and all 15 automated tests passed. Local connection checks also confirmed that the website could reach the backend through the frontend API proxy. Tests use a stubbed AI provider and synthetic upload bytes, so they verify application behaviour without uploading personal footage or incurring model usage."},
+      {"heading": "Coverage of automated checks", "text": "The tests check video input and match-context validation; transfer of uploaded bytes to the AI adapter; provider processing and file cleanup; quota failures, refusals, and malformed reports; cancellation; rejection of uncertain scores as automatic final results; and protection against concurrent analyses. Score tests cover zero values, fractional completion times, manual overrides, and the correct winning direction. Rendering tests verify AI results, manual results, quiz results, and the removal of fabricated possession and MVP displays."},
+      {"heading": "Limits of the evidence", "text": "Passing software tests does not establish that an AI model can reliably referee every recording. Gemini processes video using sampled frames, and fast goals, occlusions, cuts, unclear jersey colours, or incomplete footage can prevent a dependable score. Dance scoring also needs explicit criteria. No live scoring-accuracy measurement, participant study, or performance benchmark has been completed for this project."},
+      {"heading": "Current operational status", "text": "The website and local server are connected, but no Gemini API key was configured at the last check. Live AI analysis therefore remains unavailable until credentials and provider access are supplied. Manual score entry and the heritage quiz remain usable. Unconfigured service responses and failed analyses produce clear messages rather than demonstration results."}
+    ]
+  },
+  {
+    "title": "Conclusion and Next Steps",
+    "sections": [
+      {"heading": "Conclusion", "text": "Family AI Game Day combines team organisation, physical activities, scorekeeping, and cultural learning in one web application. Its main completed outcome is a working local game flow whose results reflect confirmed AI totals, user-entered scores, or quiz answers. The AI connection supports video review, but the current evidence supports software functionality rather than proven refereeing accuracy."},
+      {"heading": "Immediate next steps", "text": "Configure GEMINI_API_KEY in the server environment file and restart the app. Record complete matches with visible teams and scoring targets. Compare AI reports with a human-reviewed event log, checking missed events, duplicate counts, penalties, final totals, and confidence. Include unclear clips and recordings with no scoring activity. Confirm that manual correction remains straightforward."},
+      {"heading": "Further development", "text": "Useful future improvements include clearer game-specific scoring rubrics, Arabic interface support, broader heritage question sets, and optional match-history storage. Before public hosting, the backend needs authentication and per-user usage controls. These are proposed extensions, not completed features."},
+      {"heading": "Project and technical references", "text": "Project implementation and README: Family AI Game Day workspace.\nGoogle AI for Developers: Video understanding. https://ai.google.dev/gemini-api/docs/video-understanding\nGoogle AI for Developers: Structured outputs. https://ai.google.dev/gemini-api/docs/generate-content/structured-output\nUNESCO: United Arab Emirates lists and nominations. https://www.unesco.org/en/countries/ae/lists-and-nominations"}
+    ]
+  }
+]
